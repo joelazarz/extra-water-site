@@ -5,7 +5,7 @@
 	}
 
 	h1 {
-		font-size: 2em;
+		font-size: 4em;
 		text-transform: uppercase;
 		font-weight: 700;
 		margin: 0 0 0.5em 0;
