@@ -22,6 +22,8 @@
 	}
 
 	li {
+		font-family: 'Roboto', sans-serif;
+		font-weight: 700;
 		display: block;
 		float: left;
 	}
