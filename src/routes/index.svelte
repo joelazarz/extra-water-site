@@ -59,20 +59,15 @@ import LogoTshirt from '../components/index_components/LogoTshirt.svelte'
 
 	<div class="column">
 		<LogoTshirt />
-		<ExtraWaterRadio />
-		<ExtraWaterRadio />
+		<!-- <ExtraWaterRadio />
+		<ExtraWaterRadio /> -->
 	</div>
 
 
 	<div class="column">
+		<!-- <ExtraWaterRadio />
 		<ExtraWaterRadio />
-		<ExtraWaterRadio />
-		<ExtraWaterRadio />
+		<ExtraWaterRadio /> -->
 	</div>
 
 </div>
-
-
-
-
-
