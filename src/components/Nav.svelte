@@ -89,8 +89,8 @@
 
 		<div class="links">
 			<ul>
-					<li><a href="https://soundcloud.com/extrawater"><img class="soundcloud" src='soundcloud.png' alt='soundcloud' /></a></li>
-					<li><a href="https://instagram.com/extra.water"><img class="instagram" src='instagram.png' alt='instagram' /></a></li>
+					<li><a href="https://soundcloud.com/extrawater" target="_blank"><img class="soundcloud" src='soundcloud.png' alt='soundcloud' /></a></li>
+					<li><a href="https://instagram.com/extra.water" target="_blank"><img class="instagram" src='instagram.png' alt='instagram' /></a></li>
 			</ul>
 		</div>
 
