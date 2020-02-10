@@ -59,18 +59,30 @@
 	}
 
 	.soundcloud {
+		padding: 4px;
+		border-radius: 6px;
 		margin-top: 0.1em;
 		margin-bottom: -0.6em;
 		height: auto;
 		width: 35px;
 	}
 
+	.soundcloud:hover {
+		background-color: orange;
+	}
+
 	.instagram {
+		padding: 5px;
+		border-radius: 6px;
 		margin-top: 0.4em;
 		margin-bottom: -0.6em;
 		margin-left: 0.5em;
 		height: auto;
-		width: 25px;
+		width: 27px;
+	}
+
+	.instagram:hover {
+		background-color: plum;
 	}
 
 </style>

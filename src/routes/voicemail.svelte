@@ -10,15 +10,15 @@
 			const mediaRecorder = new MediaRecorder(stream);
 			mediaRecorder.start();
 
-			const audioChunks = [];
+			const recordedChunks = [];
 			mediaRecorder.addEventListener("dataavailable", e => {
-				audioChunks.push(e.data);
+				recordedChunks.push(e.data);
 			});
 
 			mediaRecorder.addEventListener("stop", () => {
 				const mime = ['audio/wav', 'audio/mpeg', 'audio/webm', 'audio/ogg']
 				.filter(MediaRecorder.isTypeSupported)[0];
-				const audioBlob = new Blob(audioChunks, {type: mime});
+				const audioBlob = new Blob(recordedChunks, {type: mime});
 				voiceBlob = audioBlob;
 
 				// const audioUrl = URL.createObjectURL(audioBlob);
