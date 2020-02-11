@@ -1,6 +1,8 @@
 <script>
+	import * as filestack from 'filestack-js';
+	const client = filestack.init(process.env.FILESTACK_SECRET) // make private
 
-	let voiceBlob = null;
+	let voiceBlob = mull;
 
 	const logBlob = () => console.log(voiceBlob)
 
@@ -20,7 +22,7 @@
 				.filter(MediaRecorder.isTypeSupported)[0];
 				const audioBlob = new Blob(recordedChunks, {type: mime});
 				voiceBlob = audioBlob;
-
+				
 				// const audioUrl = URL.createObjectURL(audioBlob);
 				// const audio = new Audio(audioUrl);
 				// audio.play();
@@ -32,6 +34,13 @@
 
 		});
 	};
+
+	const saveBlob = () => {
+		if (voiceBlob === null) { return };
+
+		client.upload(voiceBlob) // add filename
+		.then(res => console.log(res));
+	}
 
 </script>
 
@@ -53,11 +62,13 @@
 
 <svelte:head>
 	<title>Extra Water - Voicemail</title>
+	<script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js" crossorigin="anonymous"></script>
 </svelte:head>
 
 <div class="container">
 	<h1>Voicemail</h1>
 	<button on:click={recordAudio}>testing</button>
 	<button on:click={logBlob}>Log Blob</button>
+	<button on:click={saveBlob}>Save Blob</button>
 </div>
 
