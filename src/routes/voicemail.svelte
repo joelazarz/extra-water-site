@@ -1,8 +1,8 @@
 <script>
-	import * as filestack from 'filestack-js';
-	const client = filestack.init(process.env.FILESTACK_SECRET) // make private
+	// import * as filestack from 'filestack-js';
+	// const client = filestack.init(process.env.FILESTACK_SECRET)
 
-	let voiceBlob = mull;
+	let voiceBlob = null;
 
 	const logBlob = () => console.log(voiceBlob)
 
@@ -57,18 +57,64 @@
 		margin: 0 0 0.5em 0;
 	}
 
+	button:hover {
+		cursor: pointer;
+	}
+
+	.voicemail-box {
+		background-color: lightgrey;
+		display: inline-block;
+		width: 25em;
+		height: 20em;
+	}
+
+	.record-button {
+		width: 100%;
+		height: 20%;
+	}
+
+	.send-button {
+		width: 100%;
+		height: 20%;
+	}
+
+	.play-button {
+		width: 100%;
+		height: 20%;
+	}
+
+	.stop-button {
+		width: 100%;
+		height: 20%;
+	}
+
 </style>
 
 
 <svelte:head>
 	<title>Extra Water - Voicemail</title>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js" crossorigin="anonymous"></script>
 </svelte:head>
 
 <div class="container">
 	<h1>Voicemail</h1>
-	<button on:click={recordAudio}>testing</button>
-	<button on:click={logBlob}>Log Blob</button>
-	<button on:click={saveBlob}>Save Blob</button>
+	<!-- <button on:click={saveBlob}>Save Blob</button> -->
+	<div class="voicemail-box">
+		<button class="record-button" on:click={recordAudio}>
+			<i class="large material-icons">fiber_manual_record</i>
+		</button>
+		<button class="play-button">
+			<i class="large material-icons">play_arrow</i>
+		</button>
+		<button class="stop-button">
+			<i class="large material-icons">stop</i>
+		</button>
+		<button class="send-button" on:click={logBlob}>
+			<i class="large material-icons">send</i>
+		</button>
+	</div>
+
+
 </div>
 
