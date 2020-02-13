@@ -62,30 +62,71 @@
 	}
 
 	.voicemail-box {
-		background-color: lightgrey;
+		background-color: darkgray;
 		display: inline-block;
-		width: 25em;
+		width: 20em;
 		height: 20em;
+		border: 2px solid black;
+	}
+
+	.large {
+		font-size: 50px;
+	}
+
+	.display {
+		font-family: 'VT323', monospace;
+		font-size: 3em;
+		background-color: rgb(200, 248, 200);
+		border: 1px solid black;
+		margin: 1%;
+		width: 97%;
+		height: 24%;
 	}
 
 	.record-button {
-		width: 100%;
-		height: 20%;
+		color: red;
+		background-color: lightgrey;
+		border: 1px solid black;
+		margin: 1%;
+		width: 97%;
+		height: 30%;
 	}
 
-	.send-button {
-		width: 100%;
-		height: 20%;
+	.controls {
+		display: flex;
+		height: 15%;
 	}
 
 	.play-button {
-		width: 100%;
-		height: 20%;
+		color: rgb(27, 184, 27);
+		background-color: lightgrey;
+		border: 1px solid black;
+		margin: 1%;
+		width: 48%;
+		height: 90%;
 	}
 
 	.stop-button {
-		width: 100%;
-		height: 20%;
+		background-color: lightgrey;
+		border: 1px solid black;
+		margin: 1%;
+		width: 48%;
+		height: 90%;
+	}
+
+	.send-button {
+		display: flex;
+		justify-content: space-around;
+		background-color: lightgrey;
+		border: 1px solid black;
+		margin: 1%;
+		width: 97%;
+		height: 24%;
+	}
+
+	.send-button span {
+		font-size: 3em;
+		margin-top: 0.2em;
 	}
 
 </style>
@@ -93,26 +134,37 @@
 
 <svelte:head>
 	<title>Extra Water - Voicemail</title>
+	<link href="https://fonts.googleapis.com/css?family=VT323&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js" crossorigin="anonymous"></script>
 </svelte:head>
 
 <div class="container">
 	<h1>Voicemail</h1>
-	<!-- <button on:click={saveBlob}>Save Blob</button> -->
 	<div class="voicemail-box">
+		<div class="display">00:00</div>
+
 		<button class="record-button" on:click={recordAudio}>
 			<i class="large material-icons">fiber_manual_record</i>
 		</button>
+
+	<div class="controls">
 		<button class="play-button">
-			<i class="large material-icons">play_arrow</i>
+			<i class="medium material-icons">play_arrow</i>
 		</button>
 		<button class="stop-button">
-			<i class="large material-icons">stop</i>
+			<i class="medium material-icons">stop</i>
 		</button>
+		<button class="stop-button">
+			<i class="medium material-icons">delete_forever</i>
+		</button>
+	</div>
+
 		<button class="send-button" on:click={logBlob}>
+			<span>send</span>
 			<i class="large material-icons">send</i>
 		</button>
+
 	</div>
 
 
