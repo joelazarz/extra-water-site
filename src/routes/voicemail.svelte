@@ -4,12 +4,12 @@
 
 	let voiceBlob = null;
 
-	const logBlob = () => console.log(voiceBlob)
-
 	const recordAudio = () => {
 		navigator.mediaDevices.getUserMedia({ audio: true })
 		.then(stream => {
+			// play outgoing message
 			const mediaRecorder = new MediaRecorder(stream);
+			// delay this for as long as the outgoing message plays
 			mediaRecorder.start();
 
 			const recordedChunks = [];
@@ -22,7 +22,8 @@
 				.filter(MediaRecorder.isTypeSupported)[0];
 				const audioBlob = new Blob(recordedChunks, {type: mime});
 				voiceBlob = audioBlob;
-				
+				console.log('recording stopped')
+
 				// const audioUrl = URL.createObjectURL(audioBlob);
 				// const audio = new Audio(audioUrl);
 				// audio.play();
@@ -34,6 +35,14 @@
 
 		});
 	};
+
+	const playMessage = () => {
+		const audioUrl = URL.createObjectURL(voiceBlob);
+		const audio = new Audio(audioUrl);
+		audio.play();
+	};
+
+	const logBlob = () => console.log(voiceBlob)
 
 	const saveBlob = () => {
 		if (voiceBlob === null) { return };
@@ -149,7 +158,7 @@
 		</button>
 
 	<div class="controls">
-		<button class="play-button">
+		<button class="play-button" on:click={playMessage}>
 			<i class="medium material-icons">play_arrow</i>
 		</button>
 		<button class="stop-button">
