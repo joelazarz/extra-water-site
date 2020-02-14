@@ -3,6 +3,7 @@
 	// const client = filestack.init(process.env.FILESTACK_SECRET)
 
 	let voiceBlob = null;
+	let mediaRecorderTop = null;
 
 	const recordAudio = () => {
 		if (voiceBlob !== null) { voiceBlob = null };
@@ -11,6 +12,7 @@
 		.then(stream => {
 			// play outgoing message
 			const mediaRecorder = new MediaRecorder(stream);
+			mediaRecorderTop = mediaRecorder;
 			// delay this for as long as the outgoing message plays
 			mediaRecorder.start();
 
@@ -24,27 +26,34 @@
 				.filter(MediaRecorder.isTypeSupported)[0];
 				const audioBlob = new Blob(recordedChunks, {type: mime});
 				voiceBlob = audioBlob;
-				console.log('recording stopped')
-
-				// const audioUrl = URL.createObjectURL(audioBlob);
-				// const audio = new Audio(audioUrl);
-				// audio.play();
+				console.log('recording stopped');
+				console.log(audioBlob);
 			});
 		
 			setTimeout(() => {
+				if (mediaRecorder.state === 'inactive') { return };
+
 				mediaRecorder.stop();
-			}, 3000);
+			}, 10000);
 
 		});
 	};
 
-	const playMessage = () => {
+	const stopRecorder = () => {
+		if (mediaRecorderTop === null || mediaRecorderTop.state === 'inactive') { return };
+
+		mediaRecorderTop.stop();
+	};
+
+	const playBlob = () => {
+		if (voiceBlob === null) { return };
+
 		const audioUrl = URL.createObjectURL(voiceBlob);
 		const audio = new Audio(audioUrl);
 		audio.play();
 	};
 
-	const deleteMessage = () => voiceBlob = null;
+	const deleteBlob = () => voiceBlob = null;
 
 	const logBlob = () => console.log(voiceBlob);
 
@@ -110,21 +119,16 @@
 		height: 15%;
 	}
 
-	.play-button {
-		color: rgb(27, 184, 27);
+	.controls button {
 		background-color: lightgrey;
 		border: 1px solid black;
-		margin: 1%;
-		width: 48%;
+		margin: 1% 2% 1% 2%;
+		width: 46%;
 		height: 90%;
 	}
 
-	.stop-button {
-		background-color: lightgrey;
-		border: 1px solid black;
-		margin: 1%;
-		width: 48%;
-		height: 90%;
+	.play {
+		color: rgb(27, 184, 27);
 	}
 
 	.send-button {
@@ -162,13 +166,13 @@
 		</button>
 
 	<div class="controls">
-		<button class="play-button" on:click={playMessage}>
+		<button class="play" on:click={playBlob}>
 			<i class="medium material-icons">play_arrow</i>
 		</button>
-		<button class="stop-button">
+		<button class="stop" on:click={stopRecorder}>
 			<i class="medium material-icons">stop</i>
 		</button>
-		<button class="stop-button" on:click={deleteMessage}>
+		<button class="delete" on:click={deleteBlob}>
 			<i class="medium material-icons">delete_forever</i>
 		</button>
 	</div>
