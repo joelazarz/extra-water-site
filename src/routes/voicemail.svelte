@@ -4,6 +4,7 @@
 
 	let voiceBlob = null;
 	let mediaRecorderTop = null;
+	let timeCounter = 15;
 
 	const recordAudio = () => {
 		if (voiceBlob !== null) { voiceBlob = null };
@@ -11,6 +12,7 @@
 		navigator.mediaDevices.getUserMedia({ audio: true })
 		.then(stream => {
 			// play outgoing message
+
 			const mediaRecorder = new MediaRecorder(stream);
 			mediaRecorderTop = mediaRecorder;
 			// delay this for as long as the outgoing message plays
@@ -20,6 +22,12 @@
 			mediaRecorder.addEventListener("dataavailable", e => {
 				recordedChunks.push(e.data);
 			});
+
+			setInterval(function() {
+				if (timeCounter === 0) { return };
+				timeCounter--;
+				console.log(timeCounter)
+			}, 1000)
 
 			mediaRecorder.addEventListener("stop", () => {
 				const mime = ['audio/wav', 'audio/mpeg', 'audio/webm', 'audio/ogg']
@@ -32,9 +40,8 @@
 		
 			setTimeout(() => {
 				if (mediaRecorder.state === 'inactive') { return };
-
 				mediaRecorder.stop();
-			}, 10000);
+			}, 15000);
 
 		});
 	};
@@ -65,6 +72,7 @@
 	};
 
 </script>
+
 
 
 <style>
@@ -149,17 +157,22 @@
 </style>
 
 
+
 <svelte:head>
 	<title>Extra Water - Voicemail</title>
-	<link href="https://fonts.googleapis.com/css?family=VT323&display=swap" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js" crossorigin="anonymous"></script>
 </svelte:head>
 
 <div class="container">
 	<h1>Voicemail</h1>
 	<div class="voicemail-box">
-		<div class="display">00:00</div>
+		<div class="display">
+		{#if timeCounter > 9}
+			00:{timeCounter}
+		{:else}
+			00:0{timeCounter}
+		{/if}
+		</div>
 
 		<button class="record-button" on:click={recordAudio}>
 			<i class="large material-icons">fiber_manual_record</i>
