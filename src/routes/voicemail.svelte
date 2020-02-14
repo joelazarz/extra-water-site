@@ -5,6 +5,8 @@
 	let voiceBlob = null;
 
 	const recordAudio = () => {
+		if (voiceBlob !== null) { voiceBlob = null };
+
 		navigator.mediaDevices.getUserMedia({ audio: true })
 		.then(stream => {
 			// play outgoing message
@@ -42,14 +44,16 @@
 		audio.play();
 	};
 
-	const logBlob = () => console.log(voiceBlob)
+	const deleteMessage = () => voiceBlob = null;
+
+	const logBlob = () => console.log(voiceBlob);
 
 	const saveBlob = () => {
 		if (voiceBlob === null) { return };
 
 		client.upload(voiceBlob) // add filename
 		.then(res => console.log(res));
-	}
+	};
 
 </script>
 
@@ -164,7 +168,7 @@
 		<button class="stop-button">
 			<i class="medium material-icons">stop</i>
 		</button>
-		<button class="stop-button">
+		<button class="stop-button" on:click={deleteMessage}>
 			<i class="medium material-icons">delete_forever</i>
 		</button>
 	</div>
