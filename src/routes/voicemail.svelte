@@ -23,8 +23,9 @@
 				recordedChunks.push(e.data);
 			});
 
+			// setTimeout coordinating with length of outgoing message
 			setInterval(function() {
-				if (timeCounter === 0) { return };
+				if (timeCounter === 0) { clearInterval() };
 				timeCounter--;
 				console.log(timeCounter)
 			}, 1000)
