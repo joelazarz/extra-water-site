@@ -5,10 +5,12 @@
 	let voiceBlob = null;
 	let mediaRecorderTop = null;
 	let timeCounter = 15;
+	let t;
 
 	const recordAudio = () => {
 		if (voiceBlob !== null) { voiceBlob = null };
-
+		
+		timeCounter = 15;
 		navigator.mediaDevices.getUserMedia({ audio: true })
 		.then(stream => {
 			// play outgoing message
@@ -24,13 +26,13 @@
 			});
 
 			// setTimeout coordinating with length of outgoing message
-			setInterval(function() {
-				if (timeCounter === 0) { clearInterval() };
+			t = setInterval(function() {
 				timeCounter--;
 				console.log(timeCounter)
 			}, 1000)
 
 			mediaRecorder.addEventListener("stop", () => {
+				clearInterval(t);
 				const mime = ['audio/wav', 'audio/mpeg', 'audio/webm', 'audio/ogg']
 				.filter(MediaRecorder.isTypeSupported)[0];
 				const audioBlob = new Blob(recordedChunks, {type: mime});
@@ -49,7 +51,6 @@
 
 	const stopRecorder = () => {
 		if (mediaRecorderTop === null || mediaRecorderTop.state === 'inactive') { return };
-
 		mediaRecorderTop.stop();
 	};
 
