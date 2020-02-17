@@ -9,42 +9,43 @@
 
 	const recordAudio = () => {
 		if (voiceBlob !== null) { voiceBlob = null };
-		
+
 		timeCounter = 15;
 		navigator.mediaDevices.getUserMedia({ audio: true })
 		.then(stream => {
-			// play outgoing message
+			let outgoingMessage = new Audio('outgoing.wav');
+			outgoingMessage.play(); // plays outgoing message
 
-			const mediaRecorder = new MediaRecorder(stream);
-			mediaRecorderTop = mediaRecorder;
-			// delay this for as long as the outgoing message plays
-			mediaRecorder.start();
+			setTimeout(() => { // 4 second delay, waits for outgoing message to play
+				const mediaRecorder = new MediaRecorder(stream);
+				mediaRecorderTop = mediaRecorder; // for stop control
+				mediaRecorder.start();
 
-			const recordedChunks = [];
-			mediaRecorder.addEventListener("dataavailable", e => {
-				recordedChunks.push(e.data);
-			});
+				const recordedChunks = [];
+				mediaRecorder.addEventListener("dataavailable", e => {
+					recordedChunks.push(e.data);
+				});
 
-			// setTimeout coordinating with length of outgoing message
-			t = setInterval(function() {
-				timeCounter--;
-				console.log(timeCounter)
-			}, 1000)
+				t = setInterval(function() { // timer 
+					timeCounter--;
+					console.log(timeCounter)
+				}, 1000)
 
-			mediaRecorder.addEventListener("stop", () => {
-				clearInterval(t);
-				const mime = ['audio/wav', 'audio/mpeg', 'audio/webm', 'audio/ogg']
-				.filter(MediaRecorder.isTypeSupported)[0];
-				const audioBlob = new Blob(recordedChunks, {type: mime});
-				voiceBlob = audioBlob;
-				console.log('recording stopped');
-				console.log(audioBlob);
-			});
-		
-			setTimeout(() => {
-				if (mediaRecorder.state === 'inactive') { return };
-				mediaRecorder.stop();
-			}, 15000);
+				// creates blob of recorded audio data once recording has stopped
+				mediaRecorder.addEventListener("stop", () => {
+					clearInterval(t);
+					const mime = ['audio/wav', 'audio/mpeg', 'audio/webm', 'audio/ogg']
+					.filter(MediaRecorder.isTypeSupported)[0];
+					const audioBlob = new Blob(recordedChunks, {type: mime});
+					voiceBlob = audioBlob;
+				});
+
+				setTimeout(() => { // stops recording after 15 seconds
+					if (mediaRecorder.state === 'inactive') { return };
+					mediaRecorder.stop();
+				}, 15000);
+
+			}, 4000) // end of timeout for outgoing message
 
 		});
 	};
@@ -198,7 +199,6 @@
 		</button>
 
 	</div>
-
 
 </div>
 
