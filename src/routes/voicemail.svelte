@@ -2,10 +2,21 @@
 	// import * as filestack from 'filestack-js';
 	// const client = filestack.init(process.env.FILESTACK_SECRET)
 
+	let blobName = null;
 	let voiceBlob = null;
 	let mediaRecorderTop = null;
 	let timeCounter = 15;
 	let t;
+
+	const generateName = () => {
+		let str = [];
+		const arr = ['e','x','r','t','a','w','2','4','6','8','0']
+		for (let i = 0; i < 10; i++) {
+			let char = arr[Math.floor(Math.random() * arr.length)]
+			str.push(char)
+		}
+		blobName = str.join('') + '.wav';
+	};
 
 	const recordAudio = () => {
 		if (voiceBlob !== null) { voiceBlob = null };
@@ -34,6 +45,7 @@
 				// creates blob of recorded audio data once recording has stopped
 				mediaRecorder.addEventListener("stop", () => {
 					clearInterval(t);
+					generateName();
 					const mime = ['audio/wav', 'audio/mpeg', 'audio/webm', 'audio/ogg']
 					.filter(MediaRecorder.isTypeSupported)[0];
 					const audioBlob = new Blob(recordedChunks, {type: mime});
@@ -63,14 +75,21 @@
 		audio.play();
 	};
 
-	const deleteBlob = () => voiceBlob = null;
+	const deleteBlob = () => {
+		blobName = null;
+		voiceBlob = null;
+		timeCounter = 15;
+	};
 
-	const logBlob = () => console.log(voiceBlob);
+	const logBlob = () => { 
+		console.log(voiceBlob); 
+		console.log(blobName);
+	}
 
 	const saveBlob = () => {
 		if (voiceBlob === null) { return };
 
-		client.upload(voiceBlob) // add filename
+		client.upload(voiceBlob, { filename: blobName }) // add filename
 		.then(res => console.log(res));
 	};
 
