@@ -78,6 +78,7 @@
 	const deleteBlob = () => {
 		blobName = null;
 		voiceBlob = null;
+		mediaRecorderTop = null;
 		timeCounter = 15;
 	};
 
@@ -90,7 +91,11 @@
 		if (voiceBlob === null) { return };
 
 		client.upload(voiceBlob, { filename: blobName }) // add filename
-		.then(res => console.log(res));
+		.then(res => {
+			console.log(res)
+			// set voiceBlob blobName mediaRecorderTop back to null
+			deleteBlob();
+		});
 	};
 
 </script>
