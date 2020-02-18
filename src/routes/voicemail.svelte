@@ -1,6 +1,6 @@
 <script>
-	// import * as filestack from 'filestack-js';
-	// const client = filestack.init(process.env.FILESTACK_SECRET)
+	import * as filestack from 'filestack-js';
+	const client = filestack.init(process.env.FILESTACK_SECRET)
 
 	let blobName = null;
 	let voiceBlob = null;
@@ -10,10 +10,10 @@
 
 	const generateName = () => {
 		let str = [];
-		const arr = ['e','x','r','t','a','w','2','4','6','8','0']
+		const arr = ['e','x','r','t','a','w','2','4','6','8','0'];
 		for (let i = 0; i < 10; i++) {
-			let char = arr[Math.floor(Math.random() * arr.length)]
-			str.push(char)
+			let char = arr[Math.floor(Math.random() * arr.length)];
+			str.push(char);
 		}
 		blobName = str.join('') + '.wav';
 	};
@@ -39,8 +39,8 @@
 
 				t = setInterval(function() { // timer 
 					timeCounter--;
-					console.log(timeCounter)
-				}, 1000)
+					console.log(timeCounter);
+				}, 1000);
 
 				// creates blob of recorded audio data once recording has stopped
 				mediaRecorder.addEventListener("stop", () => {
@@ -57,7 +57,7 @@
 					mediaRecorder.stop();
 				}, 15000);
 
-			}, 4000) // end of timeout for outgoing message
+			}, 4000); // end of timeout for outgoing message
 
 		});
 	};
@@ -85,14 +85,14 @@
 	const logBlob = () => { 
 		console.log(voiceBlob); 
 		console.log(blobName);
-	}
+	};
 
 	const saveBlob = () => {
 		if (voiceBlob === null) { return };
 
 		client.upload(voiceBlob, { filename: blobName }) // add filename
 		.then(res => {
-			console.log(res)
+			console.log(res);
 			// set voiceBlob blobName mediaRecorderTop back to null
 			deleteBlob();
 		});
@@ -217,7 +217,7 @@
 		</button>
 	</div>
 
-		<button class="send-button" on:click={logBlob}>
+		<button class="send-button" on:click={saveBlob}>
 			<span>send</span>
 			<i class="large material-icons">send</i>
 		</button>
