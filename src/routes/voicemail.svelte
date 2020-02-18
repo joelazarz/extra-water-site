@@ -1,6 +1,6 @@
 <script>
 	import * as filestack from 'filestack-js';
-	const client = filestack.init(process.env.FILESTACK_SECRET)
+	const client = filestack.init(FILESTACK_SECRET)
 
 	let blobName = null;
 	let voiceBlob = null;
